@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -95,7 +95,11 @@
 
       usuarios[email] = senha;
       localStorage.setItem("usuarios", JSON.stringify(usuarios));
-      window.location.href = "produtos-clientes.html"; // redireciona após cadastro
+
+      // Salva o email da sessão atual
+      localStorage.setItem("usuarioLogado", email);
+
+      window.location.href = "produtos-clientes.html";
     });
   </script>
 </body>
