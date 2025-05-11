@@ -7,14 +7,15 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f3f3f3;
+      background-color: #e0f2f1;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      margin: 0;
     }
 
-    .cadastro-container {
+    .form-container {
       background-color: white;
       padding: 30px;
       border-radius: 10px;
@@ -55,20 +56,16 @@
       text-align: center;
       display: none;
     }
-
-    .msg.sucesso {
-      color: green;
-    }
   </style>
 </head>
 <body>
-  <div class="cadastro-container">
+  <div class="form-container">
     <h2>Cadastro</h2>
     <form id="cadastroForm">
-      <input type="email" id="email" placeholder="Seu e-mail" required />
-      <input type="password" id="senha" placeholder="Crie uma senha" required />
+      <input type="email" id="email" placeholder="E-mail" required />
+      <input type="password" id="senha" placeholder="Senha (mín. 6 caracteres)" required />
       <button type="submit">Cadastrar</button>
-      <div class="msg" id="msg"></div>
+      <div class="msg" id="msg">Preencha os campos corretamente.</div>
     </form>
   </div>
 
@@ -82,25 +79,23 @@
       const email = document.getElementById("email").value.trim();
       const senha = document.getElementById("senha").value;
 
-      if (senha.length < 6) {
-        msg.textContent = "A senha deve ter pelo menos 6 caracteres.";
-        msg.classList.remove("sucesso");
+      if (!email || senha.length < 6) {
         msg.style.display = "block";
+        msg.textContent = "Use um e-mail válido e senha com pelo menos 6 caracteres.";
         return;
       }
 
-      // Salvar no localStorage
       const usuarios = JSON.parse(localStorage.getItem("usuarios") || "{}");
+
+      if (usuarios[email]) {
+        msg.style.display = "block";
+        msg.textContent = "Este e-mail já está cadastrado.";
+        return;
+      }
+
       usuarios[email] = senha;
       localStorage.setItem("usuarios", JSON.stringify(usuarios));
-
-      msg.textContent = "Cadastro realizado com sucesso!";
-      msg.classList.add("sucesso");
-      msg.style.display = "block";
-
-      setTimeout(() => {
-        window.location.href = "login.html";
-      }, 1500);
+      window.location.href = "produtos-clientes.html"; // redireciona após cadastro
     });
   </script>
 </body>
