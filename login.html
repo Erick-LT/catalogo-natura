@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #e0f2f1;
+      background-color: #f3f3f3;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -18,14 +18,13 @@
       background-color: white;
       padding: 30px;
       border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
       width: 320px;
     }
 
     h2 {
       text-align: center;
       margin-bottom: 20px;
-      color: #00796b;
     }
 
     input[type="email"],
@@ -50,41 +49,44 @@
       background-color: #004d40;
     }
 
+    .link-cadastro {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .link-cadastro a {
+      color: #00796b;
+      text-decoration: none;
+    }
+
     .msg {
       margin-top: 10px;
       color: red;
       text-align: center;
       display: none;
     }
-
-    .cadastro-link {
-      display: block;
-      text-align: center;
-      margin-top: 15px;
-      color: #00796b;
-      text-decoration: none;
-    }
-
-    .cadastro-link:hover {
-      text-decoration: underline;
-    }
   </style>
 </head>
 <body>
   <div class="login-container">
-    <h2>Login</h2>
+    <h2>Entrar</h2>
     <form id="loginForm">
-      <input type="email" id="email" placeholder="Seu e-mail" required />
-      <input type="password" id="senha" placeholder="Sua senha" required />
+      <input type="email" id="email" placeholder="E-mail" required />
+      <input type="password" id="senha" placeholder="Senha" required />
       <button type="submit">Entrar</button>
       <div class="msg" id="msg"></div>
     </form>
-    <a class="cadastro-link" href="cadastro.html">Primeira vez? Cadastre-se aqui</a>
+    <div class="link-cadastro">
+      <p>Não tem uma conta? <a href="cadastro.html">Cadastre-se</a></p>
+    </div>
   </div>
 
   <script>
     const form = document.getElementById("loginForm");
     const msg = document.getElementById("msg");
+
+    const adminEmail = "ericksantosdarosalt5@gmail.com";
+    const adminSenha = "LeticiaTonne5";
 
     form.addEventListener("submit", function(e) {
       e.preventDefault();
@@ -94,23 +96,13 @@
 
       const usuarios = JSON.parse(localStorage.getItem("usuarios") || "{}");
 
-      if (!usuarios[email]) {
-        msg.textContent = "E-mail não cadastrado.";
-        msg.style.display = "block";
-        return;
-      }
-
-      if (usuarios[email] !== senha) {
-        msg.textContent = "Senha incorreta.";
-        msg.style.display = "block";
-        return;
-      }
-
-      // Verifica se é o admin
-      if (email === "ericksantosdarosalt5@gmail.com" && senha === "LeticiaTonne5") {
+      if (email === adminEmail && senha === adminSenha) {
         window.location.href = "admin.html";
-      } else {
+      } else if (usuarios[email] === senha) {
         window.location.href = "produtos.html";
+      } else {
+        msg.textContent = "E-mail ou senha incorretos.";
+        msg.style.display = "block";
       }
     });
   </script>
