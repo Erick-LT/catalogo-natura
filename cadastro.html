@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cadastro - Catálogo Natura</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f3f3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .cadastro-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      width: 320px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input[type="email"],
+    input[type="password"],
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #00796b;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #004d40;
+    }
+
+    .msg {
+      margin-top: 10px;
+      color: red;
+      text-align: center;
+      display: none;
+    }
+
+    .msg.sucesso {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <div class="cadastro-container">
+    <h2>Cadastro</h2>
+    <form id="cadastroForm">
+      <input type="email" id="email" placeholder="Seu e-mail" required />
+      <input type="password" id="senha" placeholder="Crie uma senha" required />
+      <button type="submit">Cadastrar</button>
+      <div class="msg" id="msg"></div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("cadastroForm");
+    const msg = document.getElementById("msg");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value.trim();
+      const senha = document.getElementById("senha").value;
+
+      if (senha.length < 6) {
+        msg.textContent = "A senha deve ter pelo menos 6 caracteres.";
+        msg.classList.remove("sucesso");
+        msg.style.display = "block";
+        return;
+      }
+
+      // Salvar no localStorage
+      const usuarios = JSON.parse(localStorage.getItem("usuarios") || "{}");
+      usuarios[email] = senha;
+      localStorage.setItem("usuarios", JSON.stringify(usuarios));
+
+      msg.textContent = "Cadastro realizado com sucesso!";
+      msg.classList.add("sucesso");
+      msg.style.display = "block";
+
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
