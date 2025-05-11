@@ -58,6 +58,17 @@
       <button onclick="adicionarCarrinho('001')">Adicionar ao carrinho</button>
     </div>
 
+    <div class="produto" id="179433">
+      <img src="https://via.placeholder.com/150" alt="Sabonete Ekos Cacau e Castanha">
+      <h3>Presente Natura Ekos<br>sabonete cacau e castanha</h3>
+      <p style="font-size: 14px;">1 caixa de sabonete em barra puro vegetal</p>
+      <p style="font-size: 12px;">8 unidades (4 castanhas e 4 cacaus) de 25 g cada</p>
+      <p style="font-size: 14px; font-style: italic;">exclusiva</p>
+      <p>Preço: <s>R$ 49,90</s> <strong>R$ 45,90</strong></p>
+      <p id="estoque-002">Estoque disponível: 5</p>
+  <button onclick="adicionarCarrinho('002')">Adicionar ao carrinho</button>
+    </div>
+    
     <!-- Adicione mais produtos duplicando o bloco acima e mudando o ID e dados -->
   </div>
 
@@ -69,12 +80,18 @@
 
   <script>
     const produtos = {
-      "001": {
-        nome: "Sabonete Natura",
-        preco: 10.00,
-        estoque: 3
-      }
-    };
+  "001": {
+    nome: "Sabonete Natura",
+    preco: 10.00,
+    estoque: 3
+  },
+  "179433": {
+    nome: "Presente Ekos Cacau e Castanha",
+    preco: 45.90,
+    estoque: 5
+  }
+};
+
 
     let carrinho = {};
 
