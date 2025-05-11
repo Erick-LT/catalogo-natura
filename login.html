@@ -2,12 +2,12 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login - Catálogo Natura</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
+      background-color: #e0f2f1;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -18,13 +18,14 @@
       background-color: white;
       padding: 30px;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      width: 300px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      width: 320px;
     }
 
     h2 {
       text-align: center;
       margin-bottom: 20px;
+      color: #00796b;
     }
 
     input[type="email"],
@@ -38,7 +39,7 @@
     }
 
     button {
-      background-color: #009688;
+      background-color: #00796b;
       color: white;
       font-weight: bold;
       border: none;
@@ -46,14 +47,26 @@
     }
 
     button:hover {
-      background-color: #00796b;
+      background-color: #004d40;
     }
 
-    .msg-erro {
+    .msg {
+      margin-top: 10px;
       color: red;
       text-align: center;
-      margin-top: 10px;
       display: none;
+    }
+
+    .cadastro-link {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      color: #00796b;
+      text-decoration: none;
+    }
+
+    .cadastro-link:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -64,13 +77,14 @@
       <input type="email" id="email" placeholder="Seu e-mail" required />
       <input type="password" id="senha" placeholder="Sua senha" required />
       <button type="submit">Entrar</button>
-      <div class="msg-erro" id="erroMsg">E-mail ou senha incorretos.</div>
+      <div class="msg" id="msg"></div>
     </form>
+    <a class="cadastro-link" href="cadastro.html">Primeira vez? Cadastre-se aqui</a>
   </div>
 
   <script>
     const form = document.getElementById("loginForm");
-    const erroMsg = document.getElementById("erroMsg");
+    const msg = document.getElementById("msg");
 
     form.addEventListener("submit", function(e) {
       e.preventDefault();
@@ -78,12 +92,25 @@
       const email = document.getElementById("email").value.trim();
       const senha = document.getElementById("senha").value;
 
+      const usuarios = JSON.parse(localStorage.getItem("usuarios") || "{}");
+
+      if (!usuarios[email]) {
+        msg.textContent = "E-mail não cadastrado.";
+        msg.style.display = "block";
+        return;
+      }
+
+      if (usuarios[email] !== senha) {
+        msg.textContent = "Senha incorreta.";
+        msg.style.display = "block";
+        return;
+      }
+
+      // Verifica se é o admin
       if (email === "ericksantosdarosalt5@gmail.com" && senha === "LeticiaTonne5") {
         window.location.href = "admin.html";
-      } else if (email && senha.length >= 6) {
-        window.location.href = "produtos.html";
       } else {
-        erroMsg.style.display = "block";
+        window.location.href = "produtos.html";
       }
     });
   </script>
