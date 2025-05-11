@@ -12,6 +12,7 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      margin: 0;
     }
 
     .login-container {
@@ -74,7 +75,7 @@
       <input type="email" id="email" placeholder="E-mail" required />
       <input type="password" id="senha" placeholder="Senha" required />
       <button type="submit">Entrar</button>
-      <div class="msg" id="msg"></div>
+      <div class="msg" id="msg">E-mail ou senha incorretos.</div>
     </form>
     <div class="link-cadastro">
       <p>Não tem uma conta? <a href="cadastro.html">Cadastre-se</a></p>
@@ -101,10 +102,11 @@
       } else if (usuarios[email] === senha) {
         window.location.href = "produtos.html";
       } else {
-        msg.textContent = "E-mail ou senha incorretos.";
         msg.style.display = "block";
+        msg.textContent = "E-mail ou senha incorretos.";
       }
     });
   </script>
 </body>
 </html>
+
