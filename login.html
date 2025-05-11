@@ -90,22 +90,40 @@
     const adminSenha = "LeticiaTonne5";
 
     form.addEventListener("submit", function(e) {
-      e.preventDefault();
+  e.preventDefault();
 
-      const email = document.getElementById("email").value.trim();
-      const senha = document.getElementById("senha").value;
+  const email = document.getElementById("email").value.trim();
+  const senha = document.getElementById("senha").value;
 
-      const usuarios = JSON.parse(localStorage.getItem("usuarios") || "{}");
+  const usuarios = JSON.parse(localStorage.getItem("usuarios") || "{}");
 
-      if (email === adminEmail && senha === adminSenha) {
-        window.location.href = "admin.html";
-      } else if (usuarios[email] === senha) {
-        window.location.href = "produtos.html";
-      } else {
-        msg.style.display = "block";
-        msg.textContent = "E-mail ou senha incorretos.";
-      }
-    });
+  if (email === adminEmail && senha === adminSenha) {
+    window.location.href = "admin.html";
+  } else if (usuarios[email] === senha) {
+    window.location.href = "produtos-clientes.html"; // Redireciona para produtos-clientes.html após login bem-sucedido
+  } else {
+    msg.style.display = "block";
+    msg.textContent = "E-mail ou senha incorretos.";
+  }
+});
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const email = document.getElementById("email").value.trim();
+  const senha = document.getElementById("senha").value;
+
+  const usuarios = JSON.parse(localStorage.getItem("usuarios") || "{}");
+
+  if (email === adminEmail && senha === adminSenha) {
+    window.location.href = "admin.html";
+  } else if (usuarios[email] === senha) {
+    window.location.href = "produtos-clientes.html"; // Redireciona para produtos-clientes.html após login bem-sucedido
+  } else {
+    msg.style.display = "block";
+    msg.textContent = "E-mail ou senha incorretos.";
+  }
+});
+    
   </script>
 </body>
 </html>
