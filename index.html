@@ -1,134 +1,74 @@
 ﻿<!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Login - Catálogo Natura</title>
+  <title>Catálogo Natura</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
-      background: #f5f5f5;
+      background: linear-gradient(to right, #e0f2f1, #b2dfdb);
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      margin: 0;
     }
-    .login-box {
-      background: white;
-      padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-      max-width: 350px;
-      width: 100%;
-    }
-    h2 {
+
+    .container {
+      background-color: white;
+      padding: 40px;
+      border-radius: 12px;
       text-align: center;
-      color: #c2185b;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
     }
-    input[type="email"], input[type="password"] {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+
+    h1 {
+      margin-bottom: 20px;
+      color: #00796b;
     }
-    label {
-      display: block;
-      margin-top: 10px;
+
+    p {
+      color: #555;
+      margin-bottom: 30px;
     }
-    button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 15px;
-      background-color: #c2185b;
-      color: white;
+
+    .botoes button {
+      padding: 12px 24px;
+      margin: 10px;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
+      font-size: 16px;
       cursor: pointer;
-      font-weight: bold;
+      transition: 0.2s;
     }
-    .remember {
-      display: flex;
-      align-items: center;
-      margin-top: 10px;
+
+    .entrar {
+      background-color: #00796b;
+      color: white;
     }
-    .remember input {
-      margin-right: 5px;
+
+    .entrar:hover {
+      background-color: #004d40;
+    }
+
+    .cadastrar {
+      background-color: #e0e0e0;
+    }
+
+    .cadastrar:hover {
+      background-color: #c2c2c2;
     }
   </style>
 </head>
 <body>
-
-<div class="login-box">
-  <h2>Entrar</h2>
-  <form onsubmit="return fazerLogin()">
-    <label for="email">E-mail:</label>
-    <input type="email" id="email" placeholder="Seu Gmail" required>
-
-    <label for="senha">Senha:</label>
-    <input type="password" id="senha" placeholder="Senha forte" required>
-
-    <div class="remember">
-      <input type="checkbox" id="lembrar">
-      <label for="lembrar">Lembrar meu login</label>
+  <div class="container">
+    <h1>Bem-vindo ao Catálogo Natura</h1>
+    <p>Escolha uma opção para continuar:</p>
+    <div class="botoes">
+      <button class="entrar" onclick="window.location.href='login.html'">Entrar</button>
+      <button class="cadastrar" onclick="window.location.href='cadastro.html'">Cadastrar</button>
     </div>
-
-    <button type="submit">Entrar</button>
-  </form>
-</div>
-
-<script>
-  const emailAdmin = "ericksantosdarosalt5@gmail.com";
-  const senhaAdmin = "LeticiaTonne5";
-
-  // Carregar login salvo, se existir
-  window.onload = () => {
-    const salvoEmail = localStorage.getItem("email");
-    const salvoSenha = localStorage.getItem("senha");
-    if (salvoEmail && salvoSenha) {
-      document.getElementById("email").value = salvoEmail;
-      document.getElementById("senha").value = salvoSenha;
-      document.getElementById("lembrar").checked = true;
-    }
-  };
-
-  function senhaForte(senha) {
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-    return regex.test(senha);
-  }
-
-  function fazerLogin() {
-    const email = document.getElementById("email").value.trim();
-    const senha = document.getElementById("senha").value.trim();
-    const lembrar = document.getElementById("lembrar").checked;
-
-    if (!email.endsWith("@gmail.com")) {
-      alert("Use um e-mail do Gmail.");
-      return false;
-    }
-
-    if (!senhaForte(senha)) {
-      alert("A senha deve ter no mínimo 8 caracteres, com letras maiúsculas, minúsculas e números.");
-      return false;
-    }
-
-    if (lembrar) {
-      localStorage.setItem("email", email);
-      localStorage.setItem("senha", senha);
-    } else {
-      localStorage.removeItem("email");
-      localStorage.removeItem("senha");
-    }
-
-    if (email === emailAdmin && senha === senhaAdmin) {
-      window.location.href = "admin.html";
-    } else {
-      window.location.href = "index.html";
-    }
-
-    return false; // impede envio do formulário
-  }
-</script>
-
+  </div>
 </body>
 </html>
