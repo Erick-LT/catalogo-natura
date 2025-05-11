@@ -94,12 +94,14 @@
       }
 
       usuarios[email] = senha;
-      localStorage.setItem("usuarios", JSON.stringify(usuarios));
+localStorage.setItem("usuarios", JSON.stringify(usuarios));
 
-      // Salva o email da sessão atual
-      localStorage.setItem("usuarioLogado", email);
+// Exibe uma mensagem de sucesso antes de redirecionar
+alert("Cadastro realizado com sucesso! Agora, por favor, faça o login.");
 
-      window.location.href = "produtos-clientes.html";
+// Redireciona para a tela de login
+window.location.href = "login.html";
+
     });
   </script>
 </body>
