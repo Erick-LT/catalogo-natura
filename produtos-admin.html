@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - Produtos</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+    }
+
+    /* Barra lateral */
+    .sidebar {
+      width: 220px;
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+      height: 100vh;
+      position: fixed;
+    }
+
+    .sidebar h2 {
+      font-size: 20px;
+    }
+
+    .sidebar a {
+      display: block;
+      color: white;
+      padding: 10px 0;
+      text-decoration: none;
+    }
+
+    .sidebar a:hover {
+      background-color: #34495e;
+    }
+
+    /* Conteúdo */
+    .content {
+      margin-left: 240px;
+      padding: 20px;
+      width: 100%;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f4f4f4;
+    }
+
+    input[type="text"], input[type="number"] {
+      width: 100%;
+    }
+
+    .btn {
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .btn-salvar {
+      background-color: #2ecc71;
+      color: white;
+      border: none;
+    }
+
+    .btn-excluir {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+    }
+
+    .btn-novo {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h2>Administração</h2>
+    <a href="admin.html">Painel</a>
+    <a href="produtos-admin.html">Produtos</a>
+    <a href="pedidos-admin.html">Pedidos</a>
+    <a href="usuarios-admin.html">Usuários</a>
+  </div>
+
+  <div class="content">
+    <h1>Gerenciar Produtos</h1>
+    <button class="btn btn-novo" onclick="adicionarProduto()">+ Novo Produto</button>
+
+    <table id="tabela-produtos">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Preço</th>
+          <th>Estoque</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    let produtos = JSON.parse(localStorage.getItem('produtos')) || [];
+
+    function salvarProdutos() {
+      localStorage.setItem('produtos', JSON.stringify(produtos));
+      carregarProdutos();
+    }
+
+    function carregarProdutos() {
+      const tbody = document.querySelector('#tabela-produtos tbody');
+      tbody.innerHTML = '';
+
+      produtos.forEach((produto, index) => {
+        const linha = document.createElement('tr');
+
+        linha.innerHTML = `
+          <td><input type="text" value="${produto.id}" disabled></td>
+          <td><input type="text" value="${produto.nome}" onchange="editarCampo(${index}, 'nome', this.value)"></td>
+          <td><input type="number" value="${produto.preco}" onchange="editarCampo(${index}, 'preco', this.value)"></td>
+          <td><input type="number" value="${produto.estoque}" onchange="editarCampo(${index}, 'estoque', this.value)"></td>
+          <td>
+            <button class="btn btn-salvar" onclick="salvarProdutos()">Salvar</button>
+            <button class="btn btn-excluir" onclick="excluirProduto(${index})">Excluir</button>
+          </td>
+        `;
+
+        tbody.appendChild(linha);
+      });
+    }
+
+    function editarCampo(index, campo, valor) {
+      produtos[index][campo] = valor;
+    }
+
+    function adicionarProduto() {
+      const novoProduto = {
+        id: Date.now().toString(),
+        nome: 'Novo Produto',
+        preco: 0.00,
+        estoque: 0
+      };
+      produtos.push(novoProduto);
+      salvarProdutos();
+    }
+
+    function excluirProduto(index) {
+      if (confirm('Deseja excluir este produto?')) {
+        produtos.splice(index, 1);
+        salvarProdutos();
+      }
+    }
+
+    carregarProdutos();
+  </script>
+</body>
+</html>
