@@ -1,17 +1,23 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Admin - Produtos</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Produtos - Administração</title>
   <style>
-    body {
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
       font-family: Arial, sans-serif;
       display: flex;
     }
 
-    /* Barra lateral */
-    .sidebar {
+    /* Menu lateral */
+    #menu {
       width: 200px;
       background-color: #222;
       color: white;
@@ -20,28 +26,40 @@
       padding: 10px;
     }
 
-    .sidebar h2 {
-      font-size: 20px;
+    #menu h2 {
+      margin-bottom: 20px;
     }
 
-    .sidebar a {
-      display: block;
-      color: white;
-      padding: 10px 0;
-      text-decoration: none;
+    #menu ul {
+      list-style: none;
     }
 
-    .sidebar a:hover {
-      background-color: #34495e;
+    #menu ul li {
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    #menu ul li:hover {
+      background-color: #333;
     }
 
     /* Conteúdo */
-    .content {
-      margin-left: 240px;
+    #conteudo {
+      flex-grow: 1;
       padding: 20px;
-      width: 100%;
     }
 
+    /* Botão retrátil */
+    #toggleBtn {
+      background-color: #444;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    /* Tabela de produtos */
     table {
       width: 100%;
       border-collapse: collapse;
@@ -88,16 +106,19 @@
 </head>
 <body>
 
-  <div class="sidebar">
-    <h2>Administração</h2>
-    <a href="admin.html">Painel</a>
-    <a href="produtos-admin.html">Produtos</a>
-    <a href="pedidos-admin.html">Pedidos</a>
-    <a href="usuarios-admin.html">Usuários</a>
+  <div id="menu">
+    <button id="toggleBtn">≡</button>
+    <h2>Admin</h2>
+    <ul>
+      <li onclick="location.href='produtos-admin.html'">Produtos</li>
+      <li onclick="alert('Em construção...')">Pedidos</li>
+      <li onclick="alert('Em construção...')">Usuários</li>
+      <li onclick="alert('Em construção...')">Entregas</li>
+    </ul>
   </div>
 
-  <div class="content">
-    <h1>Gerenciar Produtos</h1>
+  <div id="conteudo">
+    <h1>Produtos</h1>
     <button class="btn btn-novo" onclick="adicionarProduto()">+ Novo Produto</button>
 
     <table id="tabela-produtos">
@@ -115,6 +136,13 @@
   </div>
 
   <script>
+    const menu = document.getElementById("menu");
+    const toggleBtn = document.getElementById("toggleBtn");
+
+    toggleBtn.onclick = () => {
+      menu.style.width = menu.offsetWidth > 60 ? "60px" : "200px";
+    };
+
     let produtos = JSON.parse(localStorage.getItem('produtos')) || [];
 
     function salvarProdutos() {
@@ -168,5 +196,6 @@
 
     carregarProdutos();
   </script>
+
 </body>
 </html>
