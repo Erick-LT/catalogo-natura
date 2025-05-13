@@ -2,53 +2,31 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Catálogo Natura</title>
+  <title>Catálogo de Produtos</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
+    .secao {
+      margin-bottom: 40px;
     }
 
-    .produtos {
-      padding: 20px;
-      width: 75%;
+    .secao h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 5px;
     }
 
     .produto {
-      border: 1px solid #ccc;
+      border: 1px solid #ddd;
       padding: 10px;
-      width: 200px;
-      margin: 10px;
-      display: inline-block;
-      vertical-align: top;
-    }
-
-    .carrinho {
-      width: 25%;
-      background-color: #f8f8f8;
-      border-left: 2px solid #ccc;
-      padding: 20px;
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      overflow-y: auto;
-    }
-
-    .carrinho h2 {
-      margin-top: 0;
-    }
-
-    .total {
-      font-weight: bold;
-      margin-top: 15px;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="produtos">
-    <h1>Produtos</h1>
+
+  <!-- Seção de Produtos Individuais -->
+  <div class="secao" id="produtos-individuais">
+    <h2>Produtos Individuais</h2>
 
     <div class="produto" id="produto-001">
       <img src="https://via.placeholder.com/150" alt="Sabonete">
@@ -58,82 +36,26 @@
       <button onclick="adicionarCarrinho('001')">Adicionar ao carrinho</button>
     </div>
 
+    <!-- Adicione mais produtos aqui -->
+  </div>
+
+  <!-- Seção de Kits e Presentes -->
+  <div class="secao" id="kits-presentes">
+    <h2>Kits e Presentes</h2>
+
     <div class="produto" id="179433">
       <img src="https://via.placeholder.com/150" alt="Sabonete Ekos Cacau e Castanha">
       <h3>Presente Natura Ekos<br>sabonete cacau e castanha</h3>
-      <p style="font-size: 14px;"><strong>1 caixa de sabonete em barra puro vegetal</strong></p>
+      <p style="font-size: 14px;">1 caixa de sabonete em barra puro vegetal</p>
       <p style="font-size: 12px;">8 unidades (4 castanhas e 4 cacaus) de 25 g cada</p>
       <p style="font-size: 14px; font-style: italic;">exclusiva</p>
       <p>Preço: <s>R$ 49,90</s> <strong>R$ 45,90</strong></p>
       <p id="estoque-002">Estoque disponível: 5</p>
-  <button onclick="adicionarCarrinho('179433')">Adicionar ao carrinho</button>
+      <button onclick="adicionarCarrinho('179433')">Adicionar ao carrinho</button>
     </div>
-    
-    <!-- Adicione mais produtos duplicando o bloco acima e mudando o ID e dados -->
+
+    <!-- Adicione mais kits aqui -->
   </div>
 
-  <div class="carrinho">
-    <h2>Carrinho</h2>
-    <ul id="lista-carrinho"></ul>
-    <p class="total" id="total">Total: R$ 0,00</p>
-  </div>
-
-  <script>
-    const produtos = {
-  "001": {
-    nome: "Sabonete Natura",
-    preco: 10.00,
-    estoque: 3
-  },
-  "179433": {
-    nome: "Presente Ekos Cacau e Castanha",
-    preco: 45.90,
-    estoque: 5
-  }
-};
-
-
-    let carrinho = {};
-
-    function atualizarEstoque(codigo) {
-      document.getElementById(`estoque-${codigo}`).textContent =
-        "Estoque disponível: " + produtos[codigo].estoque;
-    }
-
-    function adicionarCarrinho(codigo) {
-      if (produtos[codigo].estoque > 0) {
-        if (!carrinho[codigo]) carrinho[codigo] = 0;
-        carrinho[codigo]++;
-        produtos[codigo].estoque--;
-        atualizarCarrinho();
-        atualizarEstoque(codigo);
-      } else {
-        alert("Produto esgotado!");
-      }
-    }
-
-    function atualizarCarrinho() {
-      const lista = document.getElementById("lista-carrinho");
-      lista.innerHTML = "";
-      let total = 0;
-
-      for (let cod in carrinho) {
-        const item = produtos[cod];
-        const quantidade = carrinho[cod];
-        const subtotal = item.preco * quantidade;
-        total += subtotal;
-
-        const li = document.createElement("li");
-        li.textContent = `${item.nome} - R$ ${item.preco.toFixed(2)} x ${quantidade}`;
-        lista.appendChild(li);
-      }
-
-      document.getElementById("total").textContent = `Total: R$ ${total.toFixed(2)}`;
-    }
-
-    for (let codigo in produtos) {
-      atualizarEstoque(codigo);
-    }
-  </script>
 </body>
 </html>
