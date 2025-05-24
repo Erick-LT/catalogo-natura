@@ -75,14 +75,13 @@
     produtos.forEach(produto => {
       const card = document.createElement('div');
       card.className = 'produto ' + (produto.tipo === 'kit' ? 'kit' : 'produto');
-      card.innerHTML = `
-       <img src="${produto.imagem || 'https://via.placeholder.com/150'}" alt="${produto.nome}">
-        <h3>${produto.nome}</h3>
-        <p>Preço: R$ ${parseFloat(produto.preco).toFixed(2).replace('.', ',')}</p>
-        <p>Estoque disponível: ${produto.estoque}</p>
-        <button onclick="adicionarCarrinho('${produto.id}')">Adicionar ao carrinho</button>
-      `;
-
+   card.innerHTML = `
+  <img src="${produto.imagem || 'https://via.placeholder.com/150'}" alt="${produto.nome}">
+  <h3>${produto.nome}</h3>
+  <p>Preço: R$ ${parseFloat(produto.preco).toFixed(2).replace('.', ',')}</p>
+  <p>Estoque disponível: ${produto.estoque}</p>
+  <button onclick="adicionarCarrinho('${produto.id}')">Adicionar ao carrinho</button>
+`;
       containerTodos.appendChild(card.cloneNode(true));
       if (produto.tipo === 'kit') {
         containerKits.appendChild(card);
