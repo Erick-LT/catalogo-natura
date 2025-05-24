@@ -123,14 +123,16 @@
 
     <table id="tabela-produtos">
       <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nome</th>
-          <th>Preço</th>
-          <th>Estoque</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
+  <tr>
+    <th>ID</th>
+    <th>Nome</th>
+    <th>Preço</th>
+    <th>Estoque</th>
+    <th>Tipo</th>
+    <th>Imagem</th>
+    <th>Ações</th>
+  </tr>
+</thead>
       <tbody></tbody>
     </table>
   </div>
@@ -173,6 +175,7 @@
   <br>
   <img src="${produto.imagem || 'https://via.placeholder.com/80'}" alt="Imagem" style="width: 80px; height: 80px; object-fit: cover; margin-top: 5px;">
 </td>
+<td>
   <button class="btn btn-salvar" onclick="salvarProdutos()">Salvar</button>
   <button class="btn btn-excluir" onclick="excluirProduto(${index})">Excluir</button>
 </td>
