@@ -161,11 +161,21 @@
           <td><input type="text" value="${produto.id}" disabled></td>
           <td><input type="text" value="${produto.nome}" onchange="editarCampo(${index}, 'nome', this.value)"></td>
           <td><input type="number" value="${produto.preco}" onchange="editarCampo(${index}, 'preco', this.value)"></td>
-          <td><input type="number" value="${produto.estoque}" onchange="editarCampo(${index}, 'estoque', this.value)"></td>
-          <td>
-            <button class="btn btn-salvar" onclick="salvarProdutos()">Salvar</button>
-            <button class="btn btn-excluir" onclick="excluirProduto(${index})">Excluir</button>
-          </td>
+  <td><input type="number" value="${produto.estoque}" onchange="editarCampo(${index}, 'estoque', this.value)"></td>
+<td>
+  <select onchange="editarCampo(${index}, 'tipo', this.value)">
+    <option value="produto" ${produto.tipo === 'produto' ? 'selected' : ''}>Produto</option>
+    <option value="kit" ${produto.tipo === 'kit' ? 'selected' : ''}>Kit</option>
+  </select>
+</td>
+<td>
+  <input type="text" value="${produto.imagem || ''}" onchange="editarCampo(${index}, 'imagem', this.value)">
+  <br>
+  <img src="${produto.imagem || 'https://via.placeholder.com/80'}" alt="Imagem" style="width: 80px; height: 80px; object-fit: cover; margin-top: 5px;">
+</td>
+  <button class="btn btn-salvar" onclick="salvarProdutos()">Salvar</button>
+  <button class="btn btn-excluir" onclick="excluirProduto(${index})">Excluir</button>
+</td>
         `;
 
         tbody.appendChild(linha);
@@ -176,17 +186,18 @@
       produtos[index][campo] = valor;
     }
 
-    function adicionarProduto() {
-      const novoProduto = {
-        id: Date.now().toString(),
-        nome: 'Novo Produto',
-        preco: 0.00,
-        estoque: 0
-      };
-      produtos.push(novoProduto);
-      salvarProdutos();
-    }
-
+function adicionarProduto() {
+  const novoProduto = {
+    id: Date.now().toString(),
+    nome: 'Novo Produto',
+    preco: 0.00,
+    estoque: 0,
+    tipo: 'produto',
+    imagem: 'https://via.placeholder.com/150'
+  };
+  produtos.push(novoProduto);
+  salvarProdutos();
+}
     function excluirProduto(index) {
       if (confirm('Deseja excluir este produto?')) {
         produtos.splice(index, 1);
