@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <title>Catálogo de Produtos</title>
   <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
     .secao {
       margin-bottom: 40px;
     }
@@ -16,46 +21,85 @@
     }
 
     .produto {
-      border: 1px solid #ddd;
+      border: 2px solid #999;
+      border-radius: 8px;
       padding: 10px;
       margin-bottom: 10px;
+      background-color: #eee;
+    }
+
+    .produto.produto {
+      background-color: #d4f7d4; /* Verde claro */
+    }
+
+    .produto.kit {
+      background-color: #f3d1f7; /* Roxo/rosa claro */
+    }
+
+    .produto img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
     }
   </style>
 </head>
 <body>
+  <div style="text-align: center; margin-bottom: 20px;">
+    <button onclick="mostrarSecao('todos')">Todos</button>
+    <button onclick="mostrarSecao('produtos')">Produtos</button>
+    <button onclick="mostrarSecao('kits')">Kits</button>
+  </div>
 
-  <!-- Seção de Produtos Individuais -->
-  <div class="secao" id="produtos-individuais">
+  <!-- Todos -->
+  <div class="secao" id="todos">
+    <h2>Todos os Produtos</h2>
+  </div>
+
+  <!-- Só Produtos -->
+  <div class="secao" id="produtos" style="display: none;">
     <h2>Produtos Individuais</h2>
-
-    <div class="produto" id="produto-001">
-      <img src="https://via.placeholder.com/150" alt="Sabonete">
-      <h3>Sabonete Natura</h3>
-      <p>Preço: R$ 10,00</p>
-      <p id="estoque-001">Estoque disponível: 3</p>
-      <button onclick="adicionarCarrinho('001')">Adicionar ao carrinho</button>
-    </div>
-
-    <!-- Adicione mais produtos aqui -->
   </div>
 
-  <!-- Seção de Kits e Presentes -->
-  <div class="secao" id="kits-presentes">
+  <!-- Só Kits -->
+  <div class="secao" id="kits" style="display: none;">
     <h2>Kits e Presentes</h2>
-
-    <div class="produto" id="179433">
-      <img src="https://via.placeholder.com/150" alt="Sabonete Ekos Cacau e Castanha">
-      <h3>Presente Natura Ekos<br>sabonete cacau e castanha</h3>
-      <p style="font-size: 14px;">1 caixa de sabonete em barra puro vegetal</p>
-      <p style="font-size: 12px;">8 unidades (4 castanhas e 4 cacaus) de 25 g cada</p>
-      <p style="font-size: 14px; font-style: italic;">exclusiva</p>
-      <p>Preço: <s>R$ 49,90</s> <strong>R$ 45,90</strong></p>
-      <p id="estoque-002">Estoque disponível: 5</p>
-      <button onclick="adicionarCarrinho('179433')">Adicionar ao carrinho</button>
-    </div>
-
-    <!-- Adicione mais kits aqui -->
   </div>
 
+  <script>
+    const produtos = JSON.parse(localStorage.getItem('produtos')) || [];
+
+    const containerTodos = document.getElementById('todos');
+    const containerProdutos = document.getElementById('produtos');
+    const containerKits = document.getElementById('kits');
+
+    produtos.forEach(produto => {
+      const card = document.createElement('div');
+      card.className = 'produto ' + (produto.tipo === 'kit' ? 'kit' : 'produto');
+      card.innerHTML = `
+       <img src="${produto.imagem || 'https://via.placeholder.com/150'}" alt="${produto.nome}">
+        <h3>${produto.nome}</h3>
+        <p>Preço: R$ ${parseFloat(produto.preco).toFixed(2).replace('.', ',')}</p>
+        <p>Estoque disponível: ${produto.estoque}</p>
+        <button onclick="adicionarCarrinho('${produto.id}')">Adicionar ao carrinho</button>
+      `;
+
+      containerTodos.appendChild(card.cloneNode(true));
+      if (produto.tipo === 'kit') {
+        containerKits.appendChild(card);
+      } else {
+        containerProdutos.appendChild(card);
+      }
+    });
+
+    function adicionarCarrinho(id) {
+      alert("Produto " + id + " adicionado ao carrinho!");
+    }
+
+    function mostrarSecao(secao) {
+      document.getElementById('todos').style.display = secao === 'todos' ? 'block' : 'none';
+      document.getElementById('produtos').style.display = secao === 'produtos' ? 'block' : 'none';
+      document.getElementById('kits').style.display = secao === 'kits' ? 'block' : 'none';
+    }
+  </script>
 </body>
 </html>
